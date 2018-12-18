@@ -2,15 +2,11 @@
 
 class SudokoSolver {
 	
-	private $grille;
-
+	private $grille = [];
 	private $comming_arr = array();
 
-
-	function __construct(array $grilleToSolve)
-	{
-		$this->grille = $grilleToSolve;
-
+	public function __construct(){
+		$this->time_tracking['start'] = microtime(true);
 	}
 
 	private function isAbsentLine($value, $line)
@@ -37,11 +33,13 @@ class SudokoSolver {
 
 	private function isAbsentBloc($value, $line, $column)
 	{
-	    $kline = intval($line/3);
-	    $kcolumn = intval($column/3);
+	    $kline = 3*intval($line/3);
+	    $kcolumn = 3*intval($column/3);
+	    $klineLimit = $kline+3;
+	    $kcolumnLimit = $kcolumn +3;
 	
-	    for($i=3*$kline; $i < (3*$kline)+3; $i++) {
-	        for ($j=3*$kcolumn; $j < (3*$kcolumn)+3; $j++) {
+	    for($i=$kline; $i < $kline+3; $i++) {
+	        for ($j=$kcolumn; $j < $kcolumnLimit; $j++) {
 	            if ($value == $this->grille[$i][$j]) {
 	                return false;
 	            }
@@ -61,6 +59,8 @@ class SudokoSolver {
 			}
 		}
 
+		shuffle($values);
+
 		return $values;
 	}
 
@@ -73,7 +73,7 @@ class SudokoSolver {
 	{
 		echo "\n";
 
-        foreach ($this->comming_array as $row) {
+        foreach ($this->grille as $row) {
             foreach ($row as $value) {
                 echo $value . ' ';
             }
@@ -108,39 +108,70 @@ class SudokoSolver {
 	 *
 	 *
 	 */
-	public function solve()
-	{
-		if (!$this->checkGridValues()) {
-			return;
-		}
+	public function solve(array $array)
+	{	
+		while(true) {
+			$this->grille = $array;
 
-		$this->comming_array = $this->grille;
-		
-		//fill cell of possibilities
-		$allCellpossibilities = [];
-		for ($i=0; $i < 9; $i++) {
-			for ($j=0; $j < 9; $j++) {
-				if (0 == $this->comming_array[$i][$j]) {
-					$allCellpossibilities[] = array(
-                            'rowIndex' 	  => $i,
-                            'columnIndex' => $j,
-                            'permissible' => $this->getPossibilitiesCell($i, $j)
-                        );
+			//fill cell of possibilities
+			$allCellpossibilities = [];
+
+			for ($i=0; $i < 9; $i++) {
+				for ($j=0; $j < 9; $j++) {
+					
+					if (0 == $array[$i][$j]) {
+
+						$allCellpossibilities[] = array(
+        	                    'rowIndex' 	  => $i,
+        	                    'columnIndex' => $j,
+        	                    'permissible' => $this->getPossibilitiesCell($i, $j)
+        	                );
+					}
 				}
 			}
+
+			if (empty($allCellpossibilities)) {
+				return $array;
+			}
+
+			//trier le tableau des possibilites
+	 		usort($allCellpossibilities, array($this, 'cmp')); 
+			
+			if (count($allCellpossibilities[0]['permissible']) == 1) {
+                $array[$allCellpossibilities[0]['rowIndex']][$allCellpossibilities[0]['columnIndex']] = current($allCellpossibilities[0]['permissible']);
+                continue;
+            }
+
+			//affecter la valeur à la cellule 
+			foreach ($allCellpossibilities[0]['permissible'] as $value) {
+				
+				$tmp = $array;
+				$tmp[$allCellpossibilities[0]['rowIndex']][$allCellpossibilities[0]['columnIndex']] = $value;
+				
+				if ($result = $this->solve($tmp)) {
+					return $this->solve($tmp);
+				}
+			}
+
+			return false;
 		}
-
-		if (empty($allCellpossibilities)) {
-
-			return $this->grille;
-		}
-
-		//trier le tableau des possibilites
-
-		//affecter la valeur à la cellule 
-
-		//refaire le meme traitement traiement
-		var_dump($allCellpossibilities); die;
-
 	}
+
+	public function cmp(array $a, array $b) 
+	{
+		$nbA = count($a['permissible']);
+		$nbB = count($b['permissible']);
+
+		if ($nbA == $nbB) {
+			return 0;
+		}
+		return ($nbA < $nbB) ? -1 : 1;
+	}
+
+	public function __destruct()
+	{    
+        $this->time_tracking['end'] = microtime(true);
+        $time = $this->time_tracking['end'] - $this->time_tracking['start'];
+        echo "\nExecution time : " . number_format($time, 3) . " sec\n\n";
+    }
 }

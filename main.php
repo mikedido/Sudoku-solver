@@ -18,8 +18,8 @@ $grille = [
 
 
 
-$sudo = new SudokoSolver($grille);
+$sudo = new SudokoSolver();
 
-$sudo->solve();
+$sudo->solve($grille);
 
 $sudo->getResult();

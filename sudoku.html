@@ -72,6 +72,11 @@
       #cell-62, #cell-71, #cell-80 { border-right:  2px solid #000000; }
       #cell-78, #cell-79, #cell-80 { border-bottom: 2px solid #000000; }
       #cell-60, #cell-69, #cell-78 { border-left:   2px solid #000000; }
+
+      .error {
+        background-color: red;
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -210,6 +215,11 @@
 
       </table>
 
+      <form id="myform" action="handle-data.php">
+        <input type='text' name='query' />
+        <A href="javascript: clearGrille()">Clear</A>
+        <A href="javascript: submitGrille()">Resolve</A>
+      </form>
     </div>
 
   </body>
@@ -240,34 +250,110 @@
        column = idCell.substring(5)%9;
 
        if (event.key == "Backspace"){
-          grille[line][column] = 0; 
+          grille[line][column] = 0;
+          document.getElementById(idCell).classList.remove("error");
        } else {
-          grille[line][column] = event.key; 
+          grille[line][column] = event.key;
        }
 
-       //affichage de la matrice  
-       console.log(grille); 
+       if (!checkLine(grille, line, column, event.key) || !checkColumn(grille, line, column, event.key) || !checkBloc(grille, line, column, event.key)) {
+          document.getElementById(idCell).classList.add("error");
+       } 
     }
 
+    /**
+    * Clear the grid
+    *
+    *
+    */
+    function clearGrille()
+    {
+      var allInputElements = document.getElementsByTagName('input');
+
+      for (var element = 0; element < allInputElements.length; element++) {
+        allInputElements[element].value= '';
+        allInputElements[element].classList.remove("error");
+      }
+
+      grille =  [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ];
+
+    }
+    /**
+    * Submit the grille to be resolved
+    *
+    */
+    function submitGrille()
+    {
+      console.log(grille);
+    }
+
+    /**
+    * Check if the value is in the array
+    *
+    * bool
+    */
     function isInArray(value, array) {
       
       return array.indexOf(value) > -1;
     }
 
-    function checkGrid() {
+    /**
+    * Check all the ligne
+    *
+    */
+    function checkLine(grile, line, column, value)
+    {
+      for (var j=0; j<9; j++) {
+        if (grille[line][j] == value && j != column) {
+          return false;
+        }
+      }
 
+      return true;
     }
 
-    function checkLine() {
+    /**
+    * Check all the column
+    *
+    */
+    function checkColumn(grile, line, column, value)
+    {
+      for (var i=0; i<9; i++) {
+        if (grille[i][column] == value && i != line) {
+          return false;
+        }
+      }
 
+      return true;
     }
 
-    function checkColumn() {
+    /**
+    * Check he bloc
+    *
+    */
+    function checkBloc(grile, line, column, value)
+    {
+      var blocLine = 3*Math.floor(line/3);
+      var blocColumn = 3*Math.floor(column/3);
 
-    }
-
-    function checkBloc() {
-
+      for (var i=blocLine; i<blocLine+3; i++) {
+        for (var j=blocColumn; j<blocColumn+3; j++) {
+          if (grille[i][j] == value && i != line && j != column) {
+            return false;
+          }
+        }
+      }
+      return true;
     }
 
   </script>

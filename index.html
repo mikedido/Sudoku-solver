@@ -215,10 +215,12 @@
 
       </table>
 
+      <p id="timer">time : 0.00</p>
+
       <form id="myform" action="handle-data.php">
         <input type='text' name='query' />
-        <a href="javascript: clearGrille()">Clear</a>
-        <a href="javascript: submitGrille()">Resolve</a>
+          <a href="javascript: clearGrille()">Clear</a>
+          <a href="javascript: submitGrille()">Resolve</a>
       </form>
     </div>
   </body>
@@ -360,7 +362,7 @@
 
     function showExecutionTime(time)
     {
-      console.log(time);
+      document.getElementById('timer').innerHTML = 'time : '+ time;
     }
 
     /**

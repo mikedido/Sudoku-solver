@@ -5,7 +5,8 @@ class SudokoSolver {
 	private $grille = [];
 	private $comming_arr = array();
 
-	public function __construct(){
+	public function __construct()
+	{
 		$this->time_tracking['start'] = microtime(true);
 	}
 
@@ -144,7 +145,6 @@ class SudokoSolver {
 
 			//affecter la valeur à la cellule 
 			foreach ($allCellpossibilities[0]['permissible'] as $value) {
-				
 				$tmp = $array;
 				$tmp[$allCellpossibilities[0]['rowIndex']][$allCellpossibilities[0]['columnIndex']] = $value;
 				
@@ -168,10 +168,27 @@ class SudokoSolver {
 		return ($nbA < $nbB) ? -1 : 1;
 	}
 
-	public function __destruct()
+	/*public function __destruct()
 	{    
         $this->time_tracking['end'] = microtime(true);
         $time = $this->time_tracking['end'] - $this->time_tracking['start'];
         echo "\nExecution time : " . number_format($time, 3) . " sec\n\n";
+    }*/
+
+    /**
+     *
+     *
+     */
+    public function getResultArray()
+    {
+    	return $this->grille;
+    }
+
+    public function getTimeExecution()
+    {
+    	$this->time_tracking['end'] = microtime(true);
+        $time = $this->time_tracking['end'] - $this->time_tracking['start'];
+        
+        return number_format($time, 3);
     }
 }

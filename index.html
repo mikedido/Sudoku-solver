@@ -217,11 +217,10 @@
 
       <form id="myform" action="handle-data.php">
         <input type='text' name='query' />
-        <A href="javascript: clearGrille()">Clear</A>
-        <A href="javascript: submitGrille()">Resolve</A>
+        <a href="javascript: clearGrille()">Clear</a>
+        <a href="javascript: submitGrille()">Resolve</a>
       </form>
     </div>
-
   </body>
   <script>
     
@@ -288,13 +287,80 @@
       ];
 
     }
+    
+    function createInstance()
+    {
+      var req = null;
+      if(window.XMLHttpRequest) {
+        req = new XMLHttpRequest();
+      }
+      else if (window.ActiveXObject) {
+        try {
+          req = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+           try {
+            req = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {
+                alert("XHR not created");
+              }
+          }
+        }
+        return req;
+    }
     /**
     * Submit the grille to be resolved
     *
     */
     function submitGrille()
     {
-      console.log(grille);
+      console.log('submit');
+      if (!checkGrille(grille)) {
+        return;
+      }
+      var data = new FormData();
+      data.append('grid', JSON.stringify(grille));
+
+      var req = createInstance();
+      req.onreadystatechange = function()
+      { 
+        if(req.readyState == 4)
+        {
+          if(req.status == 200)
+          {
+            result = JSON.parse(req.response);
+            //remplissage de la grid
+            fillGrid(result.grid);
+            showExecutionTime(result.time);
+          }  
+          else 
+          {
+            console.log("Error: returned status code " + req.status + " " + req.statusText);
+          }  
+       } 
+      }; 
+      
+      req.open('POST', "main.php", true); 
+      req.send(data);
+    }
+
+
+    function fillGrid(grid)
+    {
+      var cellNumber = 0;
+
+      for(var i=0; i<9; i++) {
+        for(var j=0; j<9; j++) {
+
+          element = document.getElementById('cell-'+cellNumber);
+          element.value = grid[i][j];
+          cellNumber++;
+        }
+      }
+    }
+
+    function showExecutionTime(time)
+    {
+      console.log(time);
     }
 
     /**
@@ -302,8 +368,8 @@
     *
     * bool
     */
-    function isInArray(value, array) {
-      
+    function isInArray(value, array)
+    {  
       return array.indexOf(value) > -1;
     }
 
@@ -353,6 +419,12 @@
           }
         }
       }
+      return true;
+    }
+
+    function checkGrille(grille)
+    {
+
       return true;
     }
 

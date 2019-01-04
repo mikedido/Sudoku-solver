@@ -1,5 +1,7 @@
 <?php
 
+session_write_close();
+
 ini_set ('max_execution_time', 0);
 
 include('SudokoSolver.php');

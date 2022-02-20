@@ -5,19 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>Sudoku resolver</title>
+    <title>Sudoku  solver</title>
     
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <script type="text/javascript" src="js/sudokuGrilled.js"></script>
-    
-  
+    <link href="src/css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="src/SudokuPuzzle.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="src/utils/grid.js"></script>
   </head>
   <body>
 
     <div class="container">
       
-      <h1>Sudoku resolver</h1>
+      <h1>Sudoku Puzzle solver</h1>
 
       <table id="grid">
 
@@ -149,11 +149,10 @@
 
       </table>
 
-      <h2 id="timer">Time : 0.00</h2>
-
-      <a id="btn-clear" href="javascript: clearGrille()" class="btn btn-primary  active" role="button" aria-pressed="true">Clear</a>
-      <a id="btn-resolve" href="javascript: submitGrille()" class="btn btn-primary  active" role="button" aria-pressed="true">Resolve</a>
-      <a id="btn-stop" href="javascript: stopExecution()" class="btn btn-primary  disabled" role="button" aria-pressed="true">Stop</a>
+      <!--<h2 id="timer">Time : 0.00</h2>-->
+      <p id="message-error"></p>
+      <a id="btn-clear" onClick="clearGrid()" class="btn btn-primary  active" role="button" aria-pressed="true">New grid</a>
+      <a id="btn-resolve" onClick="main()" class="btn btn-primary  active" role="button" aria-pressed="true">Solve</a>
     </div>
   </body>
   

@@ -69,3 +69,7 @@ input:disabled {
   background-color: red;
   color: white;
 }
+
+.cell-fill {
+  background-color: #E8E8E8;
+}

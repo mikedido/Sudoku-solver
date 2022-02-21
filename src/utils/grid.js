@@ -29,11 +29,14 @@ function isNumeric(event, idCell) {
     let line = Math.floor(idCell.substring(5) / 9);
     let column = idCell.substring(5) % 9;
 
-    if (event.key == "Backspace"){
+    if (event.key == "Backspace") {
         htmlGrid[line][column] = 0;
         document.getElementById(idCell).classList.remove("error");
+        document.getElementById(idCell).classList.remove("cell-fill");
     } else {
         htmlGrid[line][column] = event.key;
+        document.getElementById(idCell).classList.add("cell-fill");
+
     }
 
     if (isValueInHtmlGridLine(htmlGrid, line, column, event.key) || isValueInHtmlGridColumn(htmlGrid, line, column, event.key) || isValueInHtmlGridBloc(htmlGrid, line, column, event.key)) {
@@ -83,6 +86,7 @@ function clearGrid() {
     for (let element = 0; element < allInputGridElements.length; element++) {
       allInputGridElements[element].value = '';
       allInputGridElements[element].classList.remove("error");
+      allInputGridElements[element].classList.remove("cell-fill");
     }
   
     activateButtonByName('btn-resolve');

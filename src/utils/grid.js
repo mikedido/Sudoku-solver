@@ -40,6 +40,7 @@ function isNumeric(event, idCell) {
     }
 
     if (isValueInHtmlGridLine(htmlGrid, line, column, event.key) || isValueInHtmlGridColumn(htmlGrid, line, column, event.key) || isValueInHtmlGridBloc(htmlGrid, line, column, event.key)) {
+        document.getElementById(idCell).classList.remove("cell-fill");
         document.getElementById(idCell).classList.add("error");
     } 
 }

@@ -1,0 +1,21 @@
+{
+  "name": "backtracking",
+  "version": "1.0.0",
+  "description": "Sudoku solver",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "n"
+  },
+  "keywords": [
+    "n"
+  ],
+  "author": "Mahdi GUEFFAZ",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^27.5.1"
+  }
+}

@@ -6,14 +6,15 @@ In this repository, we find a tool develop in javascript to solve a sudoku puzzl
 
 - [Algorithm](#algorithm)
 - [General](#general)
-- [Controle value in row](#getting-started)
-- [Controle value in column](#Controle-value-in-column)
-- [Controle value in bloc](#Controle-value-in-bloc)
-- [Impossible puzzle](@Impossible-puzzle)
+- [Controle value in row](#controle-value-in-row)
+- [Controle value in column](#controle-value-in-column)
+- [Controle value in bloc](#controle-value-in-bloc)
+- [Impossible puzzle](#impossible-puzzle)
 - [The solver](#the-solver)
 - [Impossible puzzle](#Impossible-puzzle)
-- [Testing](#Testing)
-- [Contribution](#Contribution)
+- [Testing](#testing)
+- [Contribution](#contribution)
+- [Licencse](#licencse)
 
 
 <img src="pictures/Sudoku.jpeg" >
@@ -48,7 +49,7 @@ function isValueNotExistInLine(value, lineNumber) {
 }
 ```
 
-#### Controle value in column :
+#### Controle value in column
 
 This function check if a value is possible in column
 
@@ -64,7 +65,7 @@ function isValueNotExistInColumn(value, columnNumber) {
 }
 ```
 
-#### Controle value bloc :
+#### Controle value in bloc
 
 This function check if a value is possible in bloc 3x3
 
@@ -85,7 +86,7 @@ function isValueNotExistInBloc(value, lineNumber, columnNumber) {
     return true;
 }
 ```
-#### The solver : 
+#### The solver
 
 The function accept two parameter. The index of line and the index of column. We begin by the pair(0, 0).
 

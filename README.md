@@ -4,13 +4,19 @@ In this repository, we find a tool develop in javascript to solve a sudoku puzzl
 
 # Table of contents
 
-- [Getting started](#getting-started)
-- [Getting started](#getting-started)
-- [Getting started](#getting-started)
+- [Algorithm](#algorithm)
+- [General](#general)
+- [Controle value in row](#getting-started)
+- [Controle value in column](#Controle-value-in-column)
+- [Controle value in bloc](#Controle-value-in-bloc)
+- [Impossible puzzle](@Impossible-puzzle)
+- [The solver](#the-solver)
+- [Impossible puzzle](#Impossible-puzzle)
+- [Testing](#Testing)
+- [Contribution](#Contribution)
 
 
-<img src="pictures/Sudoku-grid.png" >
-<img src="pictures/Sudoku-grid-solution.png" >
+<img src="pictures/Sudoku.jpeg" >
 
 ## Algorithm
 
@@ -24,10 +30,10 @@ To resolve a sudoku we use the backtracking algorithm. Our Sudoku solver only ne
 2. if a grid cell has more than one possible value, place the first one
 3. If neither 1 or 2 is true in the entire grid, make a guess. Backtrack if the Sudoku becomes unsolvable.
 
-In our algorithm, I used three main functions are used in the solver. 
-
-
+In our algorithm, three main functions are used in the solver.
 #### Controle value in row :
+
+This function check if a value is possible in row
 
 ```js
 function isValueNotExistInLine(value, lineNumber) {
@@ -44,6 +50,8 @@ function isValueNotExistInLine(value, lineNumber) {
 
 #### Controle value in column :
 
+This function check if a value is possible in column
+
 ```js
 function isValueNotExistInColumn(value, columnNumber) {
     for (let i=0; i<9; i++) {
@@ -57,6 +65,8 @@ function isValueNotExistInColumn(value, columnNumber) {
 ```
 
 #### Controle value bloc :
+
+This function check if a value is possible in bloc 3x3
 
 ```js
 function isValueNotExistInBloc(value, lineNumber, columnNumber) {
@@ -77,7 +87,7 @@ function isValueNotExistInBloc(value, lineNumber, columnNumber) {
 ```
 #### The solver : 
 
-The function accept two parameter. The index of line and the index of colum. We begin by the solve(0, 0).
+The function accept two parameter. The index of line and the index of column. We begin by the pair(0, 0).
 
 ```js
 function solve(row, column) {
@@ -126,8 +136,25 @@ There are a lot of Soduku puzzle impossible to resolve like the two grid above :
 
 ## Testing : 
 
-in progress
+```
+npm install
+```
 
-## Contribution : 
+```
+npm run test
+```
+## Contribution :
+
+Feel free to submit issues and enhancement requests.
+
+Please refer to each project's style and contribution guidelines for submitting patches and additions. In general, we follow the "fork-and-pull" Git workflow.
+
+1. Fork the repo on GitHub
+2. Clone the project to your own machine
+3. Commit changes to your own branch
+4. Push your work back up to your fork
+5. Submit a Pull request so that we can review your changes
+
+NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 
 ## Licencse :

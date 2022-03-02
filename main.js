@@ -12,7 +12,7 @@ function main() {
     
     //lunch de algos
     let grid = new SudokuPuzzle(htmlGrid);
-    if (grid.solve2(0, 0)) {
+    if (grid.solve(0, 0)) {
       //show the grid in the html
       fillGrid(grid.get());
 

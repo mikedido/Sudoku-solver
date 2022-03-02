@@ -110,62 +110,7 @@ class SudokuPuzzle {
           ];
     }
 
-    solve(array) {
-
-        while(true) {
-            this.cells = array;
-            //fill cell of possibilities
-            let allCellpossibilities = [];
-        
-            for (let i=0; i < 9; i++) {
-                for (let j=0; j < 9; j++) {
-                    if (0 == array[i][j]) {
-            
-                        allCellpossibilities.push({
-                            'rowIndex' : i,
-                            'columnIndex' : j,
-                            'permissible' :  this.getPossibilitiesCell(i, j)
-                        });
-                    }
-                }
-            }
-        
-            if (allCellpossibilities.length == 0) {
-                return array;
-            }
-        
-            //trier le tableau des possibilites
-            allCellpossibilities = this.sortByKey(allCellpossibilities, 'permissible');
-
-            if (allCellpossibilities[0]['permissible'].length == 1) {
-                array[allCellpossibilities[0]['rowIndex']][allCellpossibilities[0]['columnIndex']] = allCellpossibilities[0]['permissible'];
-                continue;
-            }
-
-            allCellpossibilities[0]['permissible'].forEach(value => {
-                let tmp = array;
-                tmp[allCellpossibilities[0]['rowIndex']][allCellpossibilities[0]['columnIndex']] = parseInt(value);
-                
-                if (this.solve(tmp)) {
-                    
-                    return this.solve(tmp);
-                }
-            })
-
-            return false;
-        }
-    }
-
-    sortByKey(array, key) {
-        return array.sort(function(a, b) {
-            let x = a[key].length; 
-            let y = b[key].length;
-            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-        });
-    }
-
-
-    solve2 (row, column) {
+    solve(row, column) {
         if (8 == row && 9 == column) return true;
 
         if (column == 9) {
@@ -174,7 +119,7 @@ class SudokuPuzzle {
         }
 
         if (0 != this.cells[row][column]) {
-            return this.solve2(row, column + 1);
+            return this.solve(row, column + 1);
         }
 
         for (let number = 1; number < 10; number++) {
@@ -182,7 +127,7 @@ class SudokuPuzzle {
             if (this.isValueNotExistInBloc(number, row, column) && this.isValueNotExistInColumn(number, column) && this.isValueNotExistInLine(number, row)) {
                 this.cells[row][column] = number;
 
-                if (this.solve2(row, column +1)) {
+                if (this.solve(row, column +1)) {
                     return true;
                 }
             }
@@ -197,3 +142,5 @@ class SudokuPuzzle {
         return this.cells;
     }
 }
+
+module.exports = SudokuPuzzle;
